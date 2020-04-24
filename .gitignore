@@ -1,6 +1,8 @@
 # Tasks
 *.pdf
 
+# directories
+.*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

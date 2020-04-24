@@ -25,8 +25,9 @@ list_of_tuples = [
 def main():
     countries = dict(list_of_tuples)
     countries = sorted(countries, reverse=True,
-                            key=lambda x: (int(countries[x]), x))
+                       key=lambda x: (int(countries[x]), x))
     print(*countries, sep='\n')
+
 
 if __name__ == "__main__":
     main()
