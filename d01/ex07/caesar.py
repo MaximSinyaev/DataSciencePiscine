@@ -29,9 +29,9 @@ def decode(word, n):
 def main():
     check_args()
     if sys.argv[1] == states[0]:
-        print(encode(sys.argv[2], int(sys.argv[3])))
+        print(f'"{encode(sys.argv[2], int(sys.argv[3]))}"')
     elif sys.argv[1] == states[1]:
-        print(decode(sys.argv[2], int(sys.argv[3])))
+        print(f'"{decode(sys.argv[2], int(sys.argv[3]))}"')
 
 
 if __name__ == "__main__":

@@ -25,7 +25,7 @@ def main():
     if company_name in companies:
         print(stocks[companies[company_name]])
         return
-    print('Unknown ticker')
+    print('Unknown company')
 
 
 if __name__ == "__main__":
