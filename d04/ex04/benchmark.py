@@ -1,32 +1,57 @@
-import sys
+import random
 import timeit
-from functools import reduce
+from collections import Counter
+
+EXEC_NUM = 20
 
 
-def loop_func(n):
-    res = 0
-    for i in range(1, n + 1):
-        res += i ** 2
+def loop_func(random_list):
+    res = dict(zip(range(100), [0] * 100))
+    for i in random_list:
+        res[i] += 1
     return res
 
 
-def reduce_func(n):
-    reduce(lambda x, y: x + y ** 2, range(1, n + 1))
+def my_top_func(res_dict):
+    return dict(sorted(res_dict.items(), key=lambda x: x[1], reverse=True)[:10])
+
+
+def counter_func(random_list):
+    return Counter(random_list)
+
+
+def counter_top_func(res_counter):
+    return res_counter.most_common(10)
 
 
 if __name__ == '__main__':
     func = {
         'loop': 'loop_func',
-        'reduce': 'reduce_func',
+        'counter': 'counter_func',
+        'my_top': 'my_top_func',
+        'counter_top': 'counter_top_func',
     }
-    if len(sys.argv) != 4:
-        raise AttributeError('Script inputs 3 params: method itearations_num n')
-    if sys.argv[1].lower() not in func:
-        raise ValueError('Unknown method')
-    method = sys.argv[1].lower()
-    iter_num = int(sys.argv[2])
-    n = int(sys.argv[2])
-    time = timeit.timeit(f'{func[method]}({n})',
-                         f"from __main__ import {func[method]}",
-                         number=iter_num)
-    print(time)
+    random_list = [random.randrange(0, 100) for i in range(10 ** 6)]
+    time = dict()
+    method = 'loop'
+    time['my function'] = timeit.timeit(f'{func[method]}(random_list)',
+                                        f"from __main__ import {func[method]}, random_list",
+                                        number=EXEC_NUM)
+    method = 'counter'
+    time['counter'] = timeit.timeit(f'{func[method]}(random_list)',
+                                    f"from __main__ import {func[method]}, random_list",
+                                    number=EXEC_NUM)
+    my_counter = loop_func(random_list)
+    std_counter = counter_func(random_list)
+    method = 'my_top'
+    time['my top'] = timeit.timeit(f'{func[method]}(my_counter)',
+                                   f"from __main__ import {func[method]}, my_counter",
+                                   number=EXEC_NUM)
+    method = 'counter_top'
+    time['counter_top'] = timeit.timeit(f'{func[method]}(std_counter)',
+                                        f"from __main__ import {func[method]}, std_counter",
+                                        number=EXEC_NUM)
+    print(f"my function: {time['my function']}")
+    print(f"Counter: {time['counter']}\n")
+    print(f"my top: {time['my top']}")
+    print(f"Counter's top: {time['counter_top']}")

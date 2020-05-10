@@ -2,7 +2,7 @@
 *.pdf
 
 # directories
-.*
+.idea
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -53,7 +53,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
-*.py,cover
+#*.py,cover
 .hypothesis/
 .pytest_cache/
 
@@ -130,6 +130,3 @@ venv.bak/
 .mypy_cache/
 .dmypy.json
 dmypy.json
-
-# Pyre type checker
-.pyre/
